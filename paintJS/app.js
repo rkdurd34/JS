@@ -1,5 +1,6 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext('2d');
+const colors = document.getElementsByClassName('jsColor')
 
 
 
@@ -26,12 +27,12 @@ function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
     if (!painting) {
-        console.log('creating line in', x, y)
+
         ctx.beginPath();
         ctx.moveTo(x, y);
 
     } else {
-        console.log('creating line in', x, y)
+
         ctx.lineTo(x, y);
         ctx.stroke()
     }
@@ -45,7 +46,10 @@ function onMouseDown(evnet) {
 
 };
 
-
+function handleColorClick(event) {
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+}
 
 if (canvas) {
     canvas.addEventListener('mousemove', onMouseMove);
@@ -53,3 +57,4 @@ if (canvas) {
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
 }
+Array.from(colors).forEach(potato => potato.addEventListener('click', handleColorClick))
