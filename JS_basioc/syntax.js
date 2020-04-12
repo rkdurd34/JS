@@ -25,11 +25,6 @@ medic.hit(30);
 console.log(medic.die())
 medic.magic(50);
 
-
-
-
-
-
 arr = [1,2,3,4,5];
 arr.forEach(element => {
     element = 'hooah'
@@ -49,3 +44,47 @@ arr.map((value =>
 // for (var i=0; i<5; i++){
 //     console.log(i)
 // }
+
+plustwo = (s)=>{
+    return s+2
+};
+function plusthree(s){
+    return s+3
+};
+plusfour = (s) => s+4
+console.log(plustwo(10))
+console.log(plusthree(10))
+console.log(plusfour(10))
+
+array = [1,2,3,4,5,6,7,78,8,100,22222,333]
+arr_map = array.map(function(value){return value * 2})
+console.log(arr_map)
+arr_map_2 = array.map(v=> v*2)
+console.log(arr_map_2)
+arr_map_3 = array.filter(v => v > 10)
+console.log(arr_map_3)
+class Animal{
+    constructor(leg){
+        this.leg = leg
+    }
+    printAnimal(){
+        console.log(this.name + "으 " + String(this.leg)  + "개의 다리를 가진다.")
+
+    }
+
+}
+// Lion -> animal  유용한 기능들 가져다 쓰기
+class Lion extends Animal{
+    constructor(name,leg){
+        super(leg) // 부모의 input(constructor의 인풋)
+        this.name = name
+        
+
+    }
+    getname(){
+        console.log('내 이름은 ' + this.name)
+    }
+};
+myLion = new Lion('king',4 )
+myLion.getname()
+myLion.printAnimal()
