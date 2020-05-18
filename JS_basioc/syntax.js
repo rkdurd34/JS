@@ -20,6 +20,13 @@ var player = function (name) {
         return this.hp <= 0 ? true : false;
     };
 };
+var Node = function(data,next=none){
+    this.data = data
+    this.next = next
+    var NodeMgmt = function(data){
+
+    }
+}
 var medic = new player('medic');
 medic.hit(30);
 console.log(medic.die())
@@ -63,28 +70,65 @@ arr_map_2 = array.map(v=> v*2)
 console.log(arr_map_2)
 arr_map_3 = array.filter(v => v > 10)
 console.log(arr_map_3)
+
+
 class Animal{
-    constructor(leg){
+    constructor(leg,hoo){
         this.leg = leg
+        this.hoo = hoo
     }
     printAnimal(){
-        console.log(this.name + "으 " + String(this.leg)  + "개의 다리를 가진다.")
+        console.log(this.name + "으 " + String(this.leg)  + "개의 다리를 가진다.", this.hoo )
 
     }
 
 }
 // Lion -> animal  유용한 기능들 가져다 쓰기
 class Lion extends Animal{
-    constructor(name,leg){
-        super(leg) // 부모의 input(constructor의 인풋)
+    constructor(name,leg,hoo){
+        super(leg,hoo)
+         // 부모의 input(constructor의 인풋)
         this.name = name
+        
         
 
     }
     getname(){
-        console.log('내 이름은 ' + this.name)
+        console.log(`내 이름은 {this.hoo} ` + this.name , this.hoo)
     }
 };
-myLion = new Lion('king',4 )
+myLion = new Lion('king',4, 'd' )
 myLion.getname()
 myLion.printAnimal()
+myAnimal = new Animal(4,"dd")
+myAnimal.printAnimal()
+
+
+function sayHello(name, byeCallback){
+    setTimeout(()=>{
+        console.log(name,'안녕하세요')
+        byeCallback()
+    },2000)
+} 
+// sayHello("Mike",function (){ console.log('안녕히 가세요')})
+// setTimeout(()=> {console.log("안녕하세요")},2000)
+
+function sayHello2(name){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log(name, '님 안녕하세요')
+            resolve('서울')
+        },3000)
+    })
+}
+sayHello2('frank')
+    .then((seoul)=>console.log('안녕히가세요',seoul))
+    // reject는 catch!! resolve는 then으로!!
+
+
+async function sayHelloBye(name){
+    loc = await sayHello2(name)
+    setTimeout(()=>{console.log(loc+'로 안녕히 가세요')},2000)
+    
+} 
+sayHelloBye('sanghyeon')
