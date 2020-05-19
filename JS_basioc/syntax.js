@@ -121,8 +121,8 @@ function sayHello2(name){
         },3000)
     })
 }
-sayHello2('frank')
-    .then((seoul)=>console.log('안녕히가세요',seoul))
+// sayHello2('frank')
+//     .then((seoul)=>console.log('안녕히가세요',seoul))
     // reject는 catch!! resolve는 then으로!!
 
 
@@ -132,3 +132,4 @@ async function sayHelloBye(name){
     
 } 
 sayHelloBye('sanghyeon')
+
