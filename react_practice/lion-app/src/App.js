@@ -98,10 +98,10 @@ class App extends React.Component {
             
             <h1 className ={"myStyle"}></h1>
           <div className={'post'}>
-            나봉 테셋 합격 기원!
+          
           </div> 
-          <textarea value= {this.state.content} onChange= {this.handlingChange}></textarea> 
-          <button onClick={this.handlingClick}>손가락 튕기기</button>
+          {/* {/* <textarea value= {this.state.content} onChange= {this.handlingChange}></textarea>  */}
+          <button onClick={this.handlingClick}>손가락 튕기기</button> 
           {this.state.show&&
             this.cityTimeData.map((citytime,index)=>
           <WorldClock city={citytime[0]} time ={citytime[1]} key = {index} />
