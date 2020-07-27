@@ -3,11 +3,13 @@ import React,{useState,useRef} from 'react'
 function InputSample_(){
     const [inputs,setInputs] = useState({name:'',nickname:''})
     const nameInput = useRef();
-    console.log(inputs)
+    
     const {name,nickname} = inputs;
-    console.log(name,nickname)
+    
     const onChange= (e)=>{
+        
         const{value,name} = e.target;
+
         setInputs({
             ...inputs,
             [name]:value
