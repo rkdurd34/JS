@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
-function User({user, onRemove, onToggle}){
-    // const {username, email,id, active} = user;
+const User = React.memo(function User({user, onRemove, onToggle}){
+    const {username, email,id, active} = user;
     useEffect(()=>{
-        console.log('user값이 설정됨');
-        console.log(user);
+        
         return ()=>{
-            console.log('user값이 바뀌기 전')
-            console.log(user)
+            
         }
     },[user])
     // useEffect(()=>{
@@ -30,26 +28,23 @@ function User({user, onRemove, onToggle}){
             <b
             style = {{
                 curosr:'pointer',
-                color:user.active ? 'green' : "black"
+                color:user.active ? 'green' : "white"
             }}
-            onClick = {()=>onToggle(user.id)}>
-                {user.username}
+            onClick = {()=>onToggle(id)}>
+                {username}
                 </b>
-            <b>{user.username}</b>
-            <span>({user.email})</span>
-            <button onClick = {()=> onRemove(user.id)}>삭제</button>
+            <span>({email})</span>
+            <button onClick = {()=> onRemove(id)}>삭제</button>
         </div>
     )
-}
+});
 function UserList({users,onRemove, onToggle}){
     
     
       return (
         <div>
-          {/* <User user={users[0]} />
-          <User user={users[1]} />
-          <User user={users[2]} /> */}
-          {users.map((user,index)=> (
+          
+          {users.map((user)=> (
           <User user={user} 
           key ={user.id}  
           onRemove={onRemove} 
@@ -58,4 +53,4 @@ function UserList({users,onRemove, onToggle}){
         </div>
       );
     }
-export default UserList
+export default React.memo(UserList)

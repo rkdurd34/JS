@@ -1,112 +1,123 @@
-import React ,{useRef,useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Hello from './Hello'
-import Wrapper from './Wrapper'
-import Counter from './Counter'
-import InputSample from './InputSample'
-import InputSample_ from './InputSample_'
+import React,{useRef, useReducer,useMemo, useCallback} from 'react';
+import logo from'./logo.svg'
+import './App.css'
 import UserList from './UserList'
-import CreateUser from './CreateUser';
-function App() {
-  const [inputs,setInputs] = useState({
-    username:'',
-    email:'',
-  })
-  const {username, email} = inputs;
-  const onChange = (e)=>{
-    const {name,value} =e.target;
-    setInputs({
-      ...inputs,
-      [name]:value,
-    })
+import CreateUser from './CreateUser'
 
-  }
-  const [users,setUsers] = useState([
-    {
-      id: 1,
-      username: 'velopert',
-      email: 'public.velopert@gmail.com',
-      active :false
+function countActiveUsers(users){
+    console.log('활성 사용자 수를 세는중...');
+    return users.filter(user=>user.active).length;
+} 
+const initialState = {
+    inputs:{
+        username:'',
+        email:''
     },
-    {
-      id: 2,
-      username: 'tester',
-      email: 'tester@example.com',
-      active : false
-    },
-    {
-      id: 3,
-      username: 'liz',
-      email: 'liz@example.com',
-      active : false
+    users:[
+        {
+            id: 1,
+            username: 'velopert',
+            email: 'public.velopert@gmail.com',
+            active: true
+          },
+          {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active: false
+          },
+          {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active: false
+          }
+    ]
+};
+function reducer(state,action){
+    switch(action.type){
+        case "CHANGE_INPUT":
+            return{
+                ...state,
+                inputs:{
+                    ...state.inputs,
+                    [action.name]:action.value//action 이란 dispatch함수 내의 것들 (ex : change의 name,value/ createuser의user))
+                }
+            };3
+        case "CREATE_USER":
+            return{
+                inputs:initialState.inputs,
+                users:state.users.concat(action.user)
+            };
+        case "TOGGLE_USER":
+            return{
+                ...state,
+                users:state.users.map(user=>user.id===action.id
+                    ?{...user, active: !user.active }
+                    : user
+                    )
+            }
+        case "REMOVE_USER":
+            return{
+                ...state,
+            }
+        default:
+        return state;
     }
-  ])
-  const nextId = useRef(4)
-  const onCreate = ()=>{
     
-    const user={
-      id:nextId.current,
-      username,
-      email,
-    }
-    // setUsers([...users,user])
-    setUsers(users.concat(user))
-    setInputs({
-      username:'',
-      email:'',
-    })
-    nextId.current+=1
-  }
-  const onRemove = id => {
-    setUsers(users.filter(user=>user.id !==id))
-  }
-  const onToggle = id =>{
-    setUsers(
-      users.map(user=>
-        user.id === id ? {...user, active: !user.active}:user)
-    )
-  }
-  const name= 'react';
-  const style = {
+}
+ 
+function App(){
+    const name= 'react';
+    const style = {
     backgroundColor: 'black',
     color:'aqua',
     fomntSize:24,
     padding:'1rem',
     borderRadius: '100px',
   }
-  return (
-    
-    <div className="App">
-      <header className="App-header">
-        
-      
-        <img src={logo} className="App-logo" alt="logo" />
-        <Wrapper>
-          <div>
-        <Hello name = "react" color="white" isSpecial={false}/>
-        <Hello color="skyblue"/>
-        </div>
-        <div>
-          <Counter />
-        </div>
-        
-      </Wrapper>
-      <div>
-          <InputSample />
-      </div>
-      <div>
-        <InputSample_ />
-      </div>
-      <div>
-        <CreateUser username= {username} email = {email} onChange={onChange} onCreate={onCreate}/>
-        <UserList users = {users} onRemove={onRemove} onToggle = {onToggle}/>
-      </div>
-        
-        
-      </header>
-    </div>
-  );
-}
+    const[state,dispatch]= useReducer(reducer,initialState);
+    const nextId = useRef(4);
 
-export default App;
+    const {users} = state;
+    const {username,email} = state.inputs;
+
+    const onChange = useCallback(event=>{
+        const {name, value } = event.target;
+        dispatch({
+            type:"CHANGE_INPUT",
+            name,//name:value안하고 그대로 넣는 이유는 name 값 그대로 들어가기 떄문!
+            value
+        })
+    },[])
+
+    const onCreate = useCallback(()=> {
+        dispatch({
+            type:"CREATE_USER",
+            user:{
+                id:nextId.current,
+                username,
+                email
+            }
+        });
+        nextId.current +=1;
+    },[username,email])
+    return(
+        <div className='app'>
+            <header className ='App-header'>
+                <img src ={logo} className="App-logo" alt= "logo"/>
+                <CreateUser 
+                username ={username} 
+                email = {email} 
+                onChange = {onChange}
+                onCreate = {onCreate}/>
+                <UserList users={users}/>
+                <div>활성 사용자수 : 0</div>
+            </header> 
+            <div>
+                
+            </div>
+        </div>
+    )
+}
+export default App
