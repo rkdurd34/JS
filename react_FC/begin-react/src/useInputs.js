@@ -3,10 +3,9 @@ function useInputs(initialForm){
 const [form,setForm] = useState(initialForm)
 const onChange = useCallback(e=>{
     const{name,value} = e.tartget;
-    setForm(form=>({...form,[name]:value}))},[])
+    setForm(form=>({...form,[name]:value}), [])
     const reset = useCallback(()=> setForm(initialForm),[initialForm])
-    
-
-return [form, onChange,reset]
+    return [form, onChange,reset]
+})
 }
 export default useInputs;

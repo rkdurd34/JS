@@ -3,7 +3,7 @@ import logo from'./logo.svg'
 import './App.css'
 import UserList from './UserList'
 import CreateUser from './CreateUser'
-import useInputs from ' ./hooks/useInputs';
+import useInputs from './hooks/useInputs';
 
 
 function countActiveUsers(users){
@@ -34,14 +34,14 @@ const initialState = {
 };
 function reducer(state,action){
     switch(action.type){
-        case "CHANGE_INPUT":
-            return{
-                ...state,
-                inputs:{
-                    ...state.inputs,
-                    [action.name]:action.value//action 이란 dispatch함수 내의 것들 (ex : change의 name,value/ createuser의user))
-                }
-            };
+        // case "CHANGE_INPUT":
+        //     return{
+        //         ...state,
+        //         inputs:{
+        //             ...state.inputs,
+        //             [action.name]:action.value//action 이란 dispatch함수 내의 것들 (ex : change의 name,value/ createuser의user))
+        //         }
+        //     };
         case "CREATE_USER":
             return{
                 inputs:initialState.inputs,
@@ -82,14 +82,14 @@ function App(){
     const {users} = state;
     
 
-    const onChange = useCallback(event=>{
-        const {name, value } = event.target;
-        dispatch({
-            type:"CHANGE_INPUT",
-            name,//name:value안하고 그대로 넣는 이유는 name 값 그대로 들어가기 떄문!
-            value
-        })
-    },[])
+    // const onChange = useCallback(event=>{
+    //     const {name, value } = event.target;
+    //     dispatch({
+    //         type:"CHANGE_INPUT",
+    //         name,//name:value안하고 그대로 넣는 이유는 name 값 그대로 들어가기 떄문!
+    //         value
+    //     })
+    // },[])
 
     const onCreate = useCallback(()=> {
         dispatch({
@@ -101,7 +101,7 @@ function App(){
             }
         });
         nextId.current +=1;
-    },[username,email])
+    },[username,email,reset])
     const onToggle = useCallback(id =>{
         dispatch({
             type:"TOGGLE_USER",
