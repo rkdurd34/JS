@@ -1,12 +1,7 @@
-import React, {useEffect} from 'react';
-const User = React.memo(function User({user, onRemove, onToggle}){
-    const {username, email,id, active} = user;
-    useEffect(()=>{
-        
-        return ()=>{
-            
-        }
-    },[user])
+import React, {useEffect,useContext} from 'react';
+import {UserDispatch} from './App'
+const User = React.memo(function User({user}){
+    
     // useEffect(()=>{
 
     //     console.log('컴포넌트가 화면에 나타남')
@@ -23,6 +18,11 @@ const User = React.memo(function User({user, onRemove, onToggle}){
     // },[])//depth 부분!!:: 여기다가 무엇을 넣으면 해당 값에 대한 변화 감지
     // return 값에는 변하기 전!!!! 파라미터 첫번쨰 리턴 전은 변하고 나서 실행
 
+
+    // const {username, email,id, active} = user;
+    
+
+    const dispatch = useContext(UserDispatch)
     return(
         <div>
             <b
@@ -30,15 +30,19 @@ const User = React.memo(function User({user, onRemove, onToggle}){
                 curosr:'pointer',
                 color:user.active ? 'green' : "white"
             }}
-            onClick = {()=>onToggle(id)}>
-                {username}
+            onClick = {()=>{
+                dispatch({ type:"TOGGLE_USER",id:user.id})
+            }}>
+                {user.username}
                 </b>
-            <span>({email})</span>
-            <button onClick = {()=> onRemove(id)}>삭제</button>
+            <span>({user.email})</span>
+            <button onClick = {()=>{
+                dispatch({type:"REMOVE_USER", id:user.id})
+            }}>삭제</button>
         </div>
     )
 });
-function UserList({users,onRemove, onToggle}){
+function UserList({users}){
     
     
       return (
@@ -47,8 +51,7 @@ function UserList({users,onRemove, onToggle}){
           {users.map((user)=> (
           <User user={user} 
           key ={user.id}  
-          onRemove={onRemove} 
-          onToggle= {onToggle}
+          
           />))}
         </div>
       );
