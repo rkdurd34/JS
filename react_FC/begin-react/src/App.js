@@ -44,7 +44,6 @@ function reducer(state, action) {
     //     };
     case 'CREATE_USER':
       return {
-        inputs: initialState.inputs,
         users: state.users.concat(action.user),
       };
     case 'TOGGLE_USER':
@@ -77,12 +76,8 @@ function App() {
     padding: '1rem',
     borderRadius: '100px',
   };
-  const [{ username, email }, onChange, reset] = useInputs({
-    username: '',
-    email: '',
-  });
+  
   const [state, dispatch] = useReducer(reducer, initialState);
-  const nextId = useRef(4);
 
   const { users } = state;
 
@@ -95,17 +90,17 @@ function App() {
   //     })
   // },[])
 
-  const onCreate = useCallback(() => {
-    dispatch({
-      type: 'CREATE_USER',
-      user: {
-        id: nextId.current,
-        username,
-        email,
-      },
-    });
-    nextId.current += 1;
-  }, [username, email, reset]);
+//   const onCreate = useCallback(() => {
+//     dispatch({
+//       type: 'CREATE_USER',
+//       user: {
+//         id: nextId.current,
+//         username,
+//         email,
+//       },
+//     });
+//     nextId.current += 1;
+//   }, [username, email, reset]);
   // const onToggle = useCallback(id => {
   //   dispatch({
   //     type: 'TOGGLE_USER',
@@ -118,20 +113,14 @@ function App() {
   //     id,
   //   });
   // }, []);
-  const count = useMemo(() => countActiveUsers(users), [users]);
+  const count = useMemo(() => countActiveUsers(users), users);
   return (
     <div className="app">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
     <UserDispatch.Provider value = {dispatch}>
         <FoodInput />
-        <CreateUser
-          username={username}
-          email={email}
-          onChange={onChange}
-          onCreate={onCreate}
-        />
-
+        <CreateUser/>
         <UserList users={users} 
         // onToggle={onToggle} 
         // onRemove={onRemove}
@@ -139,7 +128,6 @@ function App() {
         <div>활성 사용자수 : {count}</div>
     </UserDispatch.Provider>
       </header>
-      <div></div>
     </div>
   );
 }
