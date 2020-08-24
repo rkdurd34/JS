@@ -5,6 +5,7 @@ import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from './hooks/useInputs';
 import FoodInput from './foodInput';
+import Hello from './Hello'
 
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는중...');
@@ -126,6 +127,7 @@ function App() {
         // onRemove={onRemove}
          />
         <div>활성 사용자수 : {count}</div>
+        <Hello />
     </UserDispatch.Provider>
       </header>
     </div>
