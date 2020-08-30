@@ -1,5 +1,6 @@
 import React, {useReducer, createContext, useContext, useRef} from 'react';
-const initialTodos = [
+const initialTodos = 
+    [
     {
         id:1,
         text:'프로젝트 생성하기',
@@ -8,7 +9,7 @@ const initialTodos = [
     {
         id:2,
         text: '컴포넌트 스타일링하기',
-        done:false
+        done:true
     },
     {
         id:3,
@@ -19,8 +20,8 @@ const initialTodos = [
         id:4,
         text:'기능 구현하기',
         done:false
-    }
-];
+    }]
+
 
 function todoReducer(state,action){
     switch(action.type){
@@ -36,24 +37,28 @@ function todoReducer(state,action){
     }
 }
 
-export const TodoStateContext = React.createContext()
+
+const TodoStateContext = createContext()
 const TodoDispatchContext = createContext()
 const TodoNextIdContext = createContext();
 
 
 export function TodoProvider({children}){
     const [state,dispatch] =  useReducer(todoReducer, initialTodos);
+    console.log('todododosdoodos', state)
     const nextId = useRef(5);
     return (
     
     <TodoStateContext.Provider value = {state}>
         <TodoDispatchContext.Provider value={dispatch}>
+            <TodoNextIdContext.Provider value= {nextId}>
             {children}
+            </TodoNextIdContext.Provider>
         </TodoDispatchContext.Provider>
 
     </TodoStateContext.Provider>)
 }
-export default TodoStateContext
+
 
 
 
