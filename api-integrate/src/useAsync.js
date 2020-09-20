@@ -25,7 +25,7 @@ function reducer (state,action){
     }
 
 }
-function useAsync(callback,  deps=[]){
+function useAsync(callback,  deps=[], skip){
     const [state,  dispatch]= useReducer(reducer,{
         loading:false,
         data:null,
@@ -41,8 +41,9 @@ function useAsync(callback,  deps=[]){
         }
     }
     useEffect(()=>{
-        fetchDate()
+        if (skip) return;
+        fetchData()
     },deps)
-    return [state,fetchData]
+    return [state,fetchData,skip]
 }
 export default useAsync;

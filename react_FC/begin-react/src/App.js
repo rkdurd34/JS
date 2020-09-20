@@ -5,7 +5,8 @@ import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from './hooks/useInputs';
 import FoodInput from './foodInput';
-import Hello from './Hello'
+// import Hello from './Hello'
+import InputSample_ from './InputSample_';
 
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는중...');
@@ -67,7 +68,10 @@ function reducer(state, action) {
 }
 
 export const UserDispatch = React.createContext(null)
-
+function Hello({색깔,name}){
+  console.log(색깔)
+  return <div style={{color:색깔}}>안녕하세요{name} </div>
+}
 function App() {
   const name = 'react';
   const style = {
@@ -127,8 +131,12 @@ function App() {
         // onRemove={onRemove}
          />
         <div>활성 사용자수 : {count}</div>
-        <Hello />
+        <Hello 색깔="red"/>
+
     </UserDispatch.Provider>
+    <>
+    <InputSample_/>
+    </>
       </header>
     </div>
   );

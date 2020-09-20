@@ -9,7 +9,7 @@ interface AppProps{
 }
 function App(props:AppProps){
   return (
-    <h1 color={props.color}>{ props.title }</h1> // 여기서 태그는 리액트 패키지 안에서 함수를 실행 시킴(createElement밑에 참고)
+    <h1 color={"{props.color}"}>{ props.title }</h1> // 여기서 태그는 리액트 패키지 안에서 함수를 실행 시킴(createElement밑에 참고)
   )
   }
 // react.default.createElement("h1", {

@@ -12,8 +12,9 @@ function InputSample_(){
 
         setInputs({
             ...inputs,
-            [name]:value
+            [name] : value    
         })
+        
         
     }
     const onReset = ()=>{
