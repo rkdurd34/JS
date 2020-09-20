@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios'
-import useAsync from './useAsync'
-import User from './User'
+import {useAsync} from 'react-async'
+import User from './User_reactasync'
 
 
 async function getUsers(){
@@ -10,29 +10,18 @@ async function getUsers(){
     )
     return response.data
 }
-
-
-
-
 function Users(){
-    const [state, refetch,skip] = useAsync(getUsers, [], true)
-    console.log(state)
+    const {data: users, error, isLoading,run} = useAsync({
+        // promiseFn: getUsers //(이것은 reload와 함께 쓰임)
+        deferFn: getUsers
+    })
     const [userId, setUserId] = useState(null)
     
-    const {loading, data:users, error} =state
-    
-
-
-    
-    useEffect (()=>{
-        if (skip) return;
-        refetch()
-        
-    },[])
+   // useAsync 라이브러리에서는 useEffect를 안사용해두댐
     console.log('dsfsdfsd', userId)
-    if (loading) return <div>로딩중...</div>
+    if (isLoading) return <div>로딩중...</div>
     if (error) return <div>에러가 발생했습니다</div>
-    if(!users) return <button onClick={refetch}>불러오기</button>
+    if(!users) return <button onClick={run}>불러오기</button>
     return (
         <>
         <ul>
@@ -46,7 +35,7 @@ function Users(){
             ))}
         </ul>
         
-        <button onClick ={refetch}>다시 불러오기</button>
+        <button onClick ={run}>다시 불러오기</button>
         <div>
             { userId && <User id ={userId}/>}
         </div>
