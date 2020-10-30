@@ -10,11 +10,14 @@ import StyledHero from '../components/StyledHero'
 
 export default function SingleRoom(props) {
     const contexttype = useContext(RoomContext)
+    const {getRoom} = contexttype
+    const room = getRoom(slug)
+        
     let slug = props.match.params.slug
     let defaultBcg_ = defaultBcg
     
-    const {getRoom} = contexttype
-    const room = getRoom(slug)
+    
+    
     
     // useEffect()
     if (!room){

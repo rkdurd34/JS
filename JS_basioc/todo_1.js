@@ -49,7 +49,6 @@ function loadToDos() {
     const loadedtoDos = localStorage.getItem(TODOS_LS)
     if (loadedtoDos !== null) {
         const parsedToDos = JSON.parse(loadedtoDos)
-        
         // parsedToDos.forEach(something);
         // ---------------> 위에랑 같은 건데 다른 형식
         parsedToDos.forEach(function (toDo) {

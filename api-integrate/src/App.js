@@ -1,7 +1,9 @@
 import React,  {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Users from './Users_reactasync';
+// import Users from './Users_reactasync';
+import Users from './UsersWithContext'
+import { UsersProvider } from './UsersContext';
 
 function App() {
   const [count,setCount] = useState(0);
@@ -18,9 +20,10 @@ function App() {
           <button onClick={()=>setCount(count+1)}>Clickme</button>
           
         </div>   
-        <>
-        <Users/>
-        </>
+        
+        <UsersProvider>
+          <Users/>
+        </UsersProvider>
       </header>
     </div>
   );
